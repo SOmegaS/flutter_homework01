@@ -4,7 +4,7 @@ import 'package:http/http.dart';
 
 const baseUrl = "https://hacker-news.firebaseio.com/v0/";
 
-Future<List<int>> getBestStories() async {
+Future<List<int>> getTopStories() async {
   var resp = await get(Uri.parse("${baseUrl}topstories.json"));
   var array = resp.body.substring(1, resp.body.length - 1).split(',');
   List<int> newsID = [];
@@ -18,18 +18,18 @@ class NewDTO {
   final int id;
   final bool? deleted;
   final String type;
-  final String by;
-  final int time;
-  final String text;
+  final String? by;
+  final int? time;
+  final String? text;
   final bool? dead;
   final int? parent;
   final int? poll;
   final List<int>? kids;
   final String? url;
-  final int score;
-  final String title;
+  final int? score;
+  final String? title;
   final List<int>? parts;
-  final int descendants;
+  final int? descendants;
 
   NewDTO({
     required this.id,
@@ -75,16 +75,4 @@ Future<NewDTO> getNew(int id) async {
   var resp = await get(Uri.parse("${baseUrl}item/$id.json"));
   Map<String, dynamic> jsonMap = json.decode(resp.body);
   return NewDTO.fromJson(jsonMap);
-}
-
-
-T asyncToSync<T>(Future<T> future) {
-  bool wait = true;
-  late T object;
-  future.then((value) {
-    object = value;
-    wait = false;
-  });
-  while (wait) {}
-  return object;
 }

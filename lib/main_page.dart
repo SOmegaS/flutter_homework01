@@ -2,21 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:homework01/news_card.dart';
 import 'package:homework01/news_page.dart';
 
+import 'news_api.dart';
+
 class MainPage extends StatelessWidget {
-  final List<String> titles;
-  final List<AssetImage> images;
+  final List<NewDTO> news;
   final Function() toggleTheme;
 
-  const MainPage({super.key, required this.titles, required this.images, required this.toggleTheme});
+  const MainPage({super.key, required this.news, required this.toggleTheme});
 
-  void _openNews(context) {
+  void _openNews(context, index) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => NewsPage(
-          title: titles[0],
-          text: "text",
-          link: "link",
-          image: images[0],
+          title: news[index].title ?? "",
+          text: news[index].text ?? "",
+          link: news[index].url ?? "",
+          image: const AssetImage("assets/img.png"),
         ),
       ),
     );
@@ -25,10 +26,10 @@ class MainPage extends StatelessWidget {
   List<Widget> _createList(context) {
     List<Widget> res = [];
 
-    for (int i = 0; i < titles.length; ++i) {
+    for (int i = 0; i < news.length; ++i) {
       res.add(GestureDetector(
-        onTap: () => _openNews(context),
-        child: NewsCard(title: titles[i], image: images[i]),
+        onTap: () => _openNews(context, i),
+        child: NewsCard(title: news[i].title ?? "", image: const AssetImage("assets/img.png")),
       ));
     }
 

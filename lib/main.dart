@@ -14,15 +14,23 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  _AppState(): mode=ThemeMode.dark {
-    getBestStories().then((newsID) {
-      getNew(newsID[3]).then((value) {
-        print(value);
-      });
+  ThemeMode _mode;
+  List<NewDTO> _news;
+
+  _AppState(): _mode=ThemeMode.dark, _news=[] {
+    getTopStories().then((newsID) {
+      for (int i = 0; i < newsID.length; ++i) {
+        getNew(newsID[i]).then((value) {
+          if (value.title != null && value.text != null && value.text != "") {
+            _news.add(value);
+          }
+          if (_news.length % 10 == 9 || i == newsID.length - 1) {
+            setState(() {});
+          }
+        });
+      }
     });
   }
-
-  ThemeMode mode;
 
   @override
   Widget build(BuildContext context) {
@@ -30,15 +38,14 @@ class _AppState extends State<App> {
       title: 'News app',
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      themeMode: mode,
+      themeMode: _mode,
       home: MainPage(
-        titles: ["Заголовок"*100, "Заголовок"*100, "Заголовок"*100],
-        images: const [AssetImage("assets/img.png"), AssetImage("assets/img.png"), AssetImage("assets/img.png")],
+        news: _news,
         toggleTheme: () => setState(() {
-          if (mode == ThemeMode.light) {
-            mode = ThemeMode.dark;
+          if (_mode == ThemeMode.light) {
+            _mode = ThemeMode.dark;
           } else {
-            mode = ThemeMode.light;
+            _mode = ThemeMode.light;
           }
         }),
       ),
