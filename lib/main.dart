@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homework01/main_page.dart';
+import 'package:homework01/news_api.dart';
 
 void main() {
   runApp(const App());
@@ -13,7 +14,13 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  _AppState(): mode=ThemeMode.dark;
+  _AppState(): mode=ThemeMode.dark {
+    getBestStories().then((newsID) {
+      getNew(newsID[3]).then((value) {
+        print(value);
+      });
+    });
+  }
 
   ThemeMode mode;
 
