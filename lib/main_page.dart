@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:homework01/news_card.dart';
 import 'package:homework01/news_page.dart';
-
+import 'package:homework01/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'news_api.dart';
 
 class MainPage extends StatelessWidget {
   final List<NewDTO> news;
-  final Function() toggleTheme;
 
-  const MainPage({super.key, required this.news, required this.toggleTheme});
+  const MainPage({super.key, required this.news});
 
   void _openNews(context, index) {
     Navigator.push(
@@ -39,17 +39,58 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: <Widget>[
-          Switch(
-            value: Theme.of(context).brightness == Brightness.light,
-            onChanged: (bool state) => toggleTheme(),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 30),
-            child: Column(
-              children: _createList(context),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 30),
+                  child: Column(
+                    children: _createList(context),
+                  ),
+                ),
+              ],
             ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.theme,
+                      style: Theme.of(context).textTheme.headlineLarge,
+                    ),
+                    Switch(
+                      value: Theme.of(context).brightness == Brightness.light,
+                      onChanged: (bool state) {
+                        InheritedExecutor.of(context).switchTheme();
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.locale,
+                      style: Theme.of(context).textTheme.headlineLarge,
+                    ),
+                    Switch(
+                      value: Localizations.localeOf(context).languageCode == 'en',
+                      onChanged: (bool state) {
+                        InheritedExecutor.of(context).switchLocale();
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
       ),
