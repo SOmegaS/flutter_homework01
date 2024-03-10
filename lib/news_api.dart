@@ -20,14 +20,14 @@ class NewDTO {
   final String type;
   final String? by;
   final int? time;
-  final String? text;
+  String? text;
   final bool? dead;
   final int? parent;
   final int? poll;
   final List<int>? kids;
   final String? url;
   final int? score;
-  final String? title;
+  String? title;
   final List<int>? parts;
   final int? descendants;
 
@@ -68,7 +68,6 @@ class NewDTO {
       descendants: json['descendants'],
     );
   }
-
 }
 
 Future<NewDTO> getNew(int id) async {

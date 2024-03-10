@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:homework01/main_page.dart';
 import 'package:homework01/news_api.dart';
-import 'package:homework01/provider.dart';
+import 'package:homework01/inherited_executor.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
@@ -18,21 +18,11 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   ThemeMode _mode = ThemeMode.dark;
   Locale _locale = const Locale('ru');
-  final List<NewDTO> _news = [];
+  late List<int> _news;
 
-  _AppState() {
-    getTopStories().then((newsID) {
-      for (int i = 0; i < newsID.length; ++i) {
-        getNew(newsID[i]).then((value) {
-          if (value.title != null && value.text != null && value.text != "") {
-            _news.add(value);
-          }
-          if (_news.length % 10 == 9 || i == newsID.length - 1) {
-            setState(() {});
-          }
-        });
-      }
-    });
+  Future<bool> waitForNews() async {
+    _news = await getTopStories();
+    return true;
   }
 
   @override
@@ -60,8 +50,16 @@ class _AppState extends State<App> {
             _locale = const Locale('en');
           }
         }),
-        child: MainPage(
-          news: _news,
+        child: FutureBuilder(
+          future: waitForNews(),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (snapshot.connectionState == ConnectionState.done && !snapshot.hasError && snapshot.hasData) {
+              return MainPage(
+                newsID: _news,
+              );
+            }
+            return const Center(child: CircularProgressIndicator());
+          },
         ),
       ),
     );
