@@ -11,10 +11,10 @@ class NewsCard extends StatelessWidget {
     return SizedBox(
         height: 150,
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(10),
           child: Row(
             children: <Widget>[
-              Image(image: image, fit: BoxFit.contain),
+              Image(image: image, fit: BoxFit.contain, height: 70),
               Expanded(
                 child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),

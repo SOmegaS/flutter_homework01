@@ -78,7 +78,7 @@ class _MainPageState extends State<MainPage> {
           Expanded(
             child: Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 100, vertical: 30),
+                  const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
               child: ListView.builder(
                 controller: _scrollController,
                 itemCount: visible,

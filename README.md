@@ -1,16 +1,40 @@
 # homework01
 
-A new Flutter project.
+Первое домашнее задание курса Flutter от Яндекс 2 курса ВШПИ МФТИ.
 
-## Getting Started
+Цель:
+Создать мобильное приложение для просмотра новостных статей с двумя экранами
+Реализовать основной экран, отображающий данные, полученные из удаленного API
+Создать экран, доступный из основного, для просмотра выбранной новостной статьи (фото, заголовок, текст, ссылка с переходом в браузер)
+Поддержать темную и светлую тему
 
-This project is a starting point for a Flutter application.
+Использована API: https://github.com/HackerNews/API
 
-A few resources to get you started if this is your first Flutter project:
+Задачи:
+Основной экран: Отображение данных, полученных из удаленного API (новостные статьи)
+Дополнительный экран: Создание вторичного экрана, доступного из основного, который может отображать подробности по выбранной новостной статье.
+Подключение к API: Интеграция API с помощью HTTP-запросов для получения и отображения данных.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Технические требования:
+Получение данных из API: Использование библиотек Dio/Http для запросов и синтаксиса async await
+Линтер: Должен быть подключен линтер и не должно быть warning-ов или error-ов
+Верстка: Должен быть реализован горизонтальный/вертикальный сролл на главном экране. Цвета, стили и шрифты должны быть предоставлены из темы.
+Хранение данных: Можно использовать SharedPreferences
+Дополнительные баллы:
+Интернационализация
+Реализовать механизм пагинации
+Реализовать TabBar
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Соответствие критериям:
+Есть описание
+Есть gif-запись работы
+Не прикреплен APK-файл, т.к. слишком большой. Вот ссылка на файлообменник с ним https://dropmefiles.com/qgU1T. Актуальна до 25.03.2024.  
+Работает на Android
+Реализован основной экран
+Реализован дополнительный экран
+Поддержана светлая и темная темы
+flutter_lints
+Код отформатирован
+json_serializable
+Интернационализация
+Пагинация
