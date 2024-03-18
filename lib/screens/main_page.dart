@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:homework01/main.dart';
+import 'package:homework01/utils/inherited_storage.dart';
 import 'package:homework01/widgets/news_card.dart';
-import 'package:homework01/utils/inherited_executor.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:news_api_flutter_package/model/article.dart';
 
@@ -73,12 +73,12 @@ class _MainPageState extends State<MainPage> {
         actions: [
           // Switch theme button
           IconButton(
-            onPressed: () => InheritedExecutor.of(context).switchTheme(),
+            onPressed: () => InheritedStorage.of(context)["switchTheme"](),
             icon: const Icon(Icons.sunny),
           ),
           // Switch language button
           IconButton(
-            onPressed: () => InheritedExecutor.of(context).switchLocale(),
+            onPressed: () => InheritedStorage.of(context)["switchLocale"](),
             icon: const Icon(Icons.language),
           ),
         ],
