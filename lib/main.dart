@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:homework01/main_page.dart';
-import 'package:homework01/news_api.dart';
 import 'package:homework01/inherited_executor.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:news_api_flutter_package/news_api_flutter_package.dart';
 
 void main() {
   runApp(const App());
 }
 
 class App extends StatefulWidget {
+  static final newsAPI = NewsAPI(apiKey: "a65c9ebbe91843da82d6c84ea652d980");
+
   const App({super.key});
 
   @override
@@ -18,12 +20,6 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   ThemeMode _mode = ThemeMode.dark;
   Locale _locale = const Locale('ru');
-  late List<int> _news;
-
-  Future<bool> waitForNews() async {
-    _news = await getTopStories();
-    return true;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,17 +46,7 @@ class _AppState extends State<App> {
             _locale = const Locale('en');
           }
         }),
-        child: FutureBuilder(
-          future: waitForNews(),
-          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            if (snapshot.connectionState == ConnectionState.done && !snapshot.hasError && snapshot.hasData) {
-              return MainPage(
-                newsID: _news,
-              );
-            }
-            return const Center(child: CircularProgressIndicator());
-          },
-        ),
+        child: MainPage(),
       ),
     );
   }
