@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:homework01/main.dart';
-import 'package:homework01/news_card.dart';
-import 'package:homework01/news_page.dart';
-import 'package:homework01/inherited_executor.dart';
+import 'package:homework01/widgets/news_card.dart';
+import 'package:homework01/utils/inherited_executor.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:news_api_flutter_package/model/article.dart';
+
+import 'news_page.dart';
 
 /// Main news page
 class MainPage extends StatefulWidget {

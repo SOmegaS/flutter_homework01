@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:homework01/main_page.dart';
-import 'package:homework01/inherited_executor.dart';
+import 'package:homework01/screens/main_page.dart';
+import 'package:homework01/utils/inherited_executor.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:news_api_flutter_package/news_api_flutter_package.dart';
 
