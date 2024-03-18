@@ -21,6 +21,28 @@ class _AppState extends State<App> {
   ThemeMode _mode = ThemeMode.dark;
   Locale _locale = const Locale('ru');
 
+  /// Switches app theme
+  void switchTheme() {
+    setState(() {
+      if (_mode == ThemeMode.dark) {
+        _mode = ThemeMode.light;
+      } else {
+        _mode = ThemeMode.dark;
+      }
+    });
+  }
+
+  /// Switches app language
+  void switchLocale() {
+    setState(() {
+      if (_locale.languageCode == 'en') {
+        _locale = const Locale('ru');
+      } else {
+        _locale = const Locale('en');
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -31,22 +53,11 @@ class _AppState extends State<App> {
       locale: _locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+      // To access variables anywhere down the tree
       home: InheritedExecutor(
-        switchTheme: () => setState(() {
-          if (_mode == ThemeMode.dark) {
-            _mode = ThemeMode.light;
-          } else {
-            _mode = ThemeMode.dark;
-          }
-        }),
-        switchLocale: () => setState(() {
-          if (_locale.languageCode == 'en') {
-            _locale = const Locale('ru');
-          } else {
-            _locale = const Locale('en');
-          }
-        }),
-        child: MainPage(),
+        switchTheme: () => switchTheme(),
+        switchLocale: () => switchLocale(),
+        child: const MainPage(),
       ),
     );
   }

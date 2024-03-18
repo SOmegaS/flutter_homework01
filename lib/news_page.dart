@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+/// Page with one news
 class NewsPage extends StatelessWidget {
   final String title;
   final String text;
   final String link;
-  final AssetImage image;
+  final Image image;
 
   const NewsPage({
     super.key,
@@ -15,6 +17,7 @@ class NewsPage extends StatelessWidget {
     required this.image,
   });
 
+  /// Opens browser on news link
   void _launchLink() async {
     Uri uri = Uri.parse(link);
     if (await canLaunchUrl(uri)) {
@@ -34,12 +37,13 @@ class NewsPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Image(image: image),
+                Image(image: image.image),
                 Text(title, style: Theme.of(context).textTheme.headlineMedium),
                 Text(text, style: Theme.of(context).textTheme.bodyLarge),
+                // Link click detector
                 GestureDetector(
                   onTap: _launchLink,
-                  child: Text(link, style: Theme.of(context).textTheme.labelSmall),
+                  child: Text(AppLocalizations.of(context)!.read_more, style: Theme.of(context).textTheme.labelSmall),
                 ),
                 ElevatedButton(onPressed: () => Navigator.pop(context), child: const Text("Назад")),
               ],

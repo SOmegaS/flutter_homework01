@@ -6,6 +6,7 @@ import 'package:homework01/inherited_executor.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:news_api_flutter_package/model/article.dart';
 
+/// Main news page
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
 
@@ -14,18 +15,21 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  final defaultUrl = "https://upload.wikimedia.org/wikipedia/commons/a/a8/NASA-Apollo8-Dec24-Earthrise.jpg";
   final ScrollController _scrollController = ScrollController();
   final List<Article> news = [];
 
   @override
   void initState() {
     super.initState();
+    // On scroll
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
         _loadMoreData();
       }
     });
+    // Load news
     _loadMoreData();
   }
 
@@ -35,23 +39,25 @@ class _MainPageState extends State<MainPage> {
     super.dispose();
   }
 
+  /// Open news page
   void _openNews(context, index) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => NewsPage(
           title: news[index].title ?? "",
-          text: news[index].content ?? "",
+          text: news[index].description ?? "",
           link: news[index].url ?? "",
-          image: const AssetImage("assets/img.png"),
+          image: Image.network(news[index].urlToImage ?? defaultUrl),
         ),
       ),
     );
   }
 
+  /// Loads news to news[] array
   void _loadMoreData() async {
     const int step = 10;
-    var value = await App.newsAPI.getTopHeadlines(country: "ru", pageSize: step, page: news.length ~/ step + 1);
+    var value = await App.newsAPI.getTopHeadlines(country: "us", pageSize: step, page: news.length ~/ step + 1);
     news.addAll(value);
     if (mounted) {
       setState(() {});
@@ -61,6 +67,21 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(AppLocalizations.of(context)!.news),
+        actions: [
+          // Switch theme button
+          IconButton(
+            onPressed: () => InheritedExecutor.of(context).switchTheme(),
+            icon: const Icon(Icons.sunny),
+          ),
+          // Switch language button
+          IconButton(
+            onPressed: () => InheritedExecutor.of(context).switchLocale(),
+            icon: const Icon(Icons.language),
+          ),
+        ],
+      ),
       body: Column(
         children: [
           Expanded(
@@ -71,55 +92,17 @@ class _MainPageState extends State<MainPage> {
                 controller: _scrollController,
                 itemCount: news.length,
                 itemBuilder: (BuildContext context, int index) {
+                  // Card with click detector
                   return GestureDetector(
                     onTap: () => _openNews(context, index),
                     child: NewsCard(
                         title: news[index].title ?? "",
-                        image: const AssetImage("assets/img.png")),
+                        image: Image.network(news[index].urlToImage ?? defaultUrl),
+                    )
                   );
                 },
               ),
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.theme,
-                      style: Theme.of(context).textTheme.headlineLarge,
-                    ),
-                    Switch(
-                      value: Theme.of(context).brightness == Brightness.light,
-                      onChanged: (bool state) {
-                        InheritedExecutor.of(context).switchTheme();
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.locale,
-                      style: Theme.of(context).textTheme.headlineLarge,
-                    ),
-                    Switch(
-                      value:
-                          Localizations.localeOf(context).languageCode == 'en',
-                      onChanged: (bool state) {
-                        InheritedExecutor.of(context).switchLocale();
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ],
           ),
         ],
       ),

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
+/// Card with one news
 class NewsCard extends StatelessWidget {
   final String title;
-  final AssetImage image;
+  final Image image;
 
   const NewsCard({super.key, required this.title, required this.image});
 
@@ -14,7 +15,7 @@ class NewsCard extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           child: Row(
             children: <Widget>[
-              Image(image: image, fit: BoxFit.contain, height: 70),
+              Image(image: image.image, fit: BoxFit.contain, height: 70),
               Expanded(
                 child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),

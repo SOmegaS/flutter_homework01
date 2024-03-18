@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Widget to store functions in context
 class InheritedExecutor extends StatelessWidget {
   final Function switchTheme;
   final Function switchLocale;
