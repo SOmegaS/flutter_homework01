@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:homework01/main.dart';
+import 'package:get_it/get_it.dart';
+import 'package:homework01/screens/favorites_screen.dart';
 import 'package:homework01/utils/inherited_storage.dart';
-import 'package:homework01/widgets/news_card.dart';
+import 'package:homework01/widgets/article_card.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:news_api_flutter_package/model/article.dart';
 
-import 'news_page.dart';
+import '../models/article.dart';
+import '../services/news_api.dart';
+import 'article_screen.dart';
 
-/// Main news page
-class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+/// Main news screen
+class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
 
   @override
-  State<StatefulWidget> createState() => _MainPageState();
+  State<StatefulWidget> createState() => _MainScreenState();
 }
 
-class _MainPageState extends State<MainPage> {
-  final defaultUrl = "https://upload.wikimedia.org/wikipedia/commons/a/a8/NASA-Apollo8-Dec24-Earthrise.jpg";
+class _MainScreenState extends State<MainScreen> {
   final ScrollController _scrollController = ScrollController();
-  final List<Article> news = [];
+  final List<Article> articles = [];
 
   @override
   void initState() {
@@ -30,7 +31,7 @@ class _MainPageState extends State<MainPage> {
         _loadMoreData();
       }
     });
-    // Load news
+    // Load articles
     _loadMoreData();
   }
 
@@ -40,26 +41,25 @@ class _MainPageState extends State<MainPage> {
     super.dispose();
   }
 
-  /// Open news page
-  void _openNews(context, index) {
+  /// Open article's page
+  void _openArticle(context, index) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => NewsPage(
-          title: news[index].title ?? "",
-          text: news[index].description ?? "",
-          link: news[index].url ?? "",
-          image: Image.network(news[index].urlToImage ?? defaultUrl),
+        builder: (context) => ArticleScreen(
+          article: articles[index],
         ),
       ),
     );
   }
 
-  /// Loads news to news[] array
+  /// Loads news to articles[] array
   void _loadMoreData() async {
     const int step = 10;
-    var value = await App.newsAPI.getTopHeadlines(country: "us", pageSize: step, page: news.length ~/ step + 1);
-    news.addAll(value);
+    var news = await GetIt.instance
+        .get<NewsAPI>()
+        .getNews(step, articles.length ~/ step + 1);
+    articles.addAll(news);
     if (mounted) {
       setState(() {});
     }
@@ -85,21 +85,26 @@ class _MainPageState extends State<MainPage> {
       ),
       body: Column(
         children: [
+          ElevatedButton(
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const FavoritesScreen()),
+            ),
+            child: Text(AppLocalizations.of(context)!.favorites),
+          ),
           Expanded(
             child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
               child: ListView.builder(
                 controller: _scrollController,
-                itemCount: news.length,
+                itemCount: articles.length,
                 itemBuilder: (BuildContext context, int index) {
                   // Card with click detector
                   return GestureDetector(
-                    onTap: () => _openNews(context, index),
-                    child: NewsCard(
-                        title: news[index].title ?? "",
-                        image: Image.network(news[index].urlToImage ?? defaultUrl),
-                    )
+                    onTap: () => _openArticle(context, index),
+                    child: ArticleCard(
+                      article: articles[index],
+                    ),
                   );
                 },
               ),

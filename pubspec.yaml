@@ -18,11 +18,16 @@ dependencies:
   cupertino_icons: ^1.0.2
   intl: ^0.18.0
   news_api_flutter_package: ^1.2.0
+  cached_network_image: any
+  get_it: ^7.6.7
 
 dev_dependencies:
+  integration_test:
+    sdk: flutter
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+  mocktail: any
 
 flutter:
   uses-material-design: true

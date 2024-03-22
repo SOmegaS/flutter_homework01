@@ -1,4 +1,6 @@
 {
     "news": "News",
-    "read_more": "Read more..."
+    "read_more": "Read more...",
+    "back": "Back",
+    "favorites": "Favorites"
 }
