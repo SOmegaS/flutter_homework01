@@ -5,6 +5,8 @@
 Мобильное приложение для просмотра новостных статей
 
 Скриншоты:
+![screenshot_1.jpg](screenshoots/screenshot_1.jpg)
+[Остальные](screenshoots)
 
 APK файл:
-файл
+[app-release.apk](app-release.apk)
