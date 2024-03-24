@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import '../models/article.dart';
-import '../models/favorites.dart';
+import '../services/favorites.dart';
 
 /// Card with one article
 class ArticleCard extends StatelessWidget {
@@ -46,12 +46,7 @@ class ArticleCard extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                Set favors = GetIt.instance.get<Favorites>().favorites;
-                if (favors.contains(article)) {
-                  favors.remove(article);
-                } else {
-                  favors.add(article);
-                }
+                GetIt.instance.get<Favorites>().toggle(article);
               },
               icon: const Icon(Icons.add_circle),
             ),

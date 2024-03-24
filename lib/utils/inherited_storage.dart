@@ -6,10 +6,12 @@ class InheritedStorage extends StatelessWidget {
   final InheritedStorage? _ancestor;
   final Widget child;
 
+  /// Store value
   void put(key, value) {
     _map[key] = value;
   }
 
+  /// Get value from this or ancestor
   dynamic get(key) {
     return _map[key] ?? _ancestor?.get(key);
   }

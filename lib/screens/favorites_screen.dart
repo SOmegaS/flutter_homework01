@@ -3,7 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:homework01/widgets/article_card.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../models/favorites.dart';
+import '../services/favorites.dart';
 import 'article_screen.dart';
 
 class FavoritesScreen extends StatefulWidget {
@@ -20,7 +20,7 @@ class FavoritesScreenState extends State<FavoritesScreen> {
       context,
       MaterialPageRoute(
         builder: (context) => ArticleScreen(
-          article: GetIt.instance.get<Favorites>().favorites.elementAt(index),
+          article: GetIt.instance.get<Favorites>().get(index),
         ),
       ),
     );
@@ -39,16 +39,13 @@ class FavoritesScreenState extends State<FavoritesScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
               child: ListView.builder(
-                itemCount: GetIt.instance.get<Favorites>().favorites.length,
+                itemCount: GetIt.instance.get<Favorites>().length(),
                 itemBuilder: (BuildContext context, int index) {
                   // Card with click detector
                   return GestureDetector(
                     onTap: () => _openArticle(context, index),
                     child: ArticleCard(
-                      article: GetIt.instance
-                          .get<Favorites>()
-                          .favorites
-                          .elementAt(index),
+                      article: GetIt.instance.get<Favorites>().get(index),
                     ),
                   );
                 },

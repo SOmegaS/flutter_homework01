@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:homework01/models/favorites.dart';
+import 'package:homework01/services/favorites.dart';
+import 'package:homework01/services/favorites_impl.dart';
 import 'package:homework01/screens/main_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:homework01/services/news_api.dart';
@@ -14,7 +15,7 @@ void main() {
 
 /// Init dependencies
 void initDependencies() {
-  GetIt.instance.registerSingleton<Favorites>(Favorites());
+  GetIt.instance.registerSingleton<Favorites>(FavoritesImpl());
   GetIt.instance.registerSingleton<NewsAPI>(NewsApiOrg());
 }
 

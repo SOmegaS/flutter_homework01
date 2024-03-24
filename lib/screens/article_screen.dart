@@ -54,8 +54,9 @@ class ArticleScreen extends StatelessWidget {
                       style: Theme.of(context).textTheme.labelSmall),
                 ),
                 ElevatedButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text(AppLocalizations.of(context)!.back)),
+                  onPressed: () => Navigator.pop(context),
+                  child: Text(AppLocalizations.of(context)!.back),
+                ),
               ],
             ),
           ),
