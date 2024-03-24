@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:homework01/utils/callback_variable.dart';
 
 import '../models/article.dart';
 import '../services/favorites.dart';
@@ -46,7 +47,9 @@ class ArticleCard extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                GetIt.instance.get<Favorites>().toggle(article);
+                var favors = GetIt.instance.get<CallbackVariable<Favorites>>();
+                favors.value.toggle(article);
+                favors.update();
               },
               icon: const Icon(Icons.add_circle),
             ),

@@ -16,6 +16,9 @@ class ArticleScreen extends StatelessWidget {
 
   /// Opens browser on article's link
   void _launchLink() async {
+    if (article.url == null) {
+      throw 'url not defined';
+    }
     Uri uri = Uri.parse(article.url!);
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri);

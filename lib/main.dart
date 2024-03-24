@@ -6,6 +6,7 @@ import 'package:homework01/screens/main_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:homework01/services/news_api.dart';
 import 'package:homework01/services/news_api_org.dart';
+import 'package:homework01/utils/callback_variable.dart';
 import 'package:homework01/utils/inherited_storage.dart';
 
 void main() {
@@ -15,7 +16,8 @@ void main() {
 
 /// Init dependencies
 void initDependencies() {
-  GetIt.instance.registerSingleton<Favorites>(FavoritesImpl());
+  GetIt.instance.registerSingleton<CallbackVariable<Favorites>>(
+      CallbackVariable(FavoritesImpl()));
   GetIt.instance.registerSingleton<NewsAPI>(NewsApiOrg());
 }
 
