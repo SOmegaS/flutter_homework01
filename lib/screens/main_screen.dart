@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:homework01/screens/favorites_screen.dart';
-import 'package:homework01/utils/inherited_storage.dart';
-import 'package:homework01/widgets/article_card.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../models/article.dart';
-import '../services/news_api.dart';
-import 'article_screen.dart';
+import 'package:homework01/utils/inherited_storage.dart';
+import 'package:homework01/widgets/app_navigation_bar.dart';
+import 'package:homework01/widgets/article_card.dart';
+import 'package:homework01/models/article.dart';
+import 'package:homework01/services/news_api.dart';
+import 'package:homework01/screens/article_screen.dart';
+
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// Main news screen
 class MainScreen extends StatefulWidget {
@@ -83,34 +84,22 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          ElevatedButton(
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const FavoritesScreen()),
-            ),
-            child: Text(AppLocalizations.of(context)!.favorites),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
-              child: ListView.builder(
-                controller: _scrollController,
-                itemCount: articles.length,
-                itemBuilder: (BuildContext context, int index) {
-                  // Card with click detector
-                  return GestureDetector(
-                    onTap: () => _openArticle(context, index),
-                    child: ArticleCard(
-                      article: articles[index],
-                    ),
-                  );
-                },
+      bottomNavigationBar: const AppNavigationBar(currentScreen: Screen.main),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+        child: ListView.builder(
+          controller: _scrollController,
+          itemCount: articles.length,
+          itemBuilder: (BuildContext context, int index) {
+            // Card with click detector
+            return GestureDetector(
+              onTap: () => _openArticle(context, index),
+              child: ArticleCard(
+                article: articles[index],
               ),
-            ),
-          ),
-        ],
+            );
+          },
+        ),
       ),
     );
   }
