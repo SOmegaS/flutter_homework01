@@ -33,7 +33,10 @@ class ArticleScreen extends StatelessWidget {
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 50),
+            padding: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width * 0.03,
+              vertical: MediaQuery.of(context).size.height * 0.02,
+            ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -46,19 +49,28 @@ class ArticleScreen extends StatelessWidget {
                             const Icon(Icons.error),
                       )
                     : const Icon(Icons.error),
-                Text(article.title ?? "",
-                    style: Theme.of(context).textTheme.headlineMedium),
-                Text(article.text ?? "",
-                    style: Theme.of(context).textTheme.bodyLarge),
+                Text(
+                  article.title ?? "",
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+                Text(
+                  article.text ?? "",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
                 // Link click detector
                 GestureDetector(
                   onTap: _launchLink,
-                  child: Text(AppLocalizations.of(context)!.read_more,
-                      style: Theme.of(context).textTheme.labelSmall),
+                  child: Text(
+                    AppLocalizations.of(context)!.read_more,
+                    style: Theme.of(context).textTheme.labelSmall,
+                  ),
                 ),
                 ElevatedButton(
                   onPressed: () => Navigator.pop(context),
-                  child: Text(AppLocalizations.of(context)!.back),
+                  child: Text(
+                    AppLocalizations.of(context)!.back,
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
                 ),
               ],
             ),

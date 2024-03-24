@@ -18,26 +18,34 @@ class ArticleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 150,
+      height: MediaQuery.of(context).size.height * 0.13,
       child: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: EdgeInsets.symmetric(
+          horizontal: MediaQuery.of(context).size.width * 0.01,
+          vertical: MediaQuery.of(context).size.height * 0.005,
+        ),
         child: Row(
           children: <Widget>[
-            (article.imageUrl != null)
-                ? CachedNetworkImage(
-                    imageUrl: article.imageUrl!,
-                    placeholder: (context, url) =>
-                        const CircularProgressIndicator(),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                    fit: BoxFit.contain,
-                    height: 70,
-                  )
-                : const Icon(Icons.error),
             Expanded(
+              flex: 1,
+              child: (article.imageUrl != null)
+                  ? CachedNetworkImage(
+                      imageUrl: article.imageUrl!,
+                      placeholder: (context, url) =>
+                          const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                      fit: BoxFit.cover,
+                      height: 70,
+                    )
+                  : const Icon(Icons.error),
+            ),
+            Expanded(
+              flex: 4,
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+                padding: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width * 0.01,
+                ),
                 child: Text(
                   article.title ?? "",
                   style: Theme.of(context).textTheme.headlineMedium,

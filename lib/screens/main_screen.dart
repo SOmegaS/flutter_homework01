@@ -70,7 +70,10 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.news),
+        title: Text(
+          AppLocalizations.of(context)!.news,
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
         actions: [
           // Switch theme button
           IconButton(
@@ -86,7 +89,10 @@ class _MainScreenState extends State<MainScreen> {
       ),
       bottomNavigationBar: const AppNavigationBar(currentScreen: Screen.main),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+        padding: EdgeInsets.symmetric(
+          horizontal: MediaQuery.of(context).size.width * 0.02,
+          vertical: MediaQuery.of(context).size.height * 0.01,
+        ),
         child: ListView.builder(
           controller: _scrollController,
           itemCount: articles.length,

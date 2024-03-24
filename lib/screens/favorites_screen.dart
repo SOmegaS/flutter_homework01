@@ -44,7 +44,10 @@ class FavoritesScreenState extends State<FavoritesScreen> {
       bottomNavigationBar:
           const AppNavigationBar(currentScreen: Screen.favorites),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+        padding: EdgeInsets.symmetric(
+          horizontal: MediaQuery.of(context).size.width * 0.02,
+          vertical: MediaQuery.of(context).size.height * 0.01,
+        ),
         child: ListView.builder(
           itemCount:
               GetIt.instance.get<CallbackVariable<Favorites>>().value.length(),
