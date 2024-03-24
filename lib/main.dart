@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:homework01/screens/favorites_screen.dart';
 import 'package:homework01/services/favorites.dart';
 import 'package:homework01/services/favorites_impl.dart';
 import 'package:homework01/screens/main_screen.dart';
@@ -57,22 +58,26 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'News app',
-      theme: ThemeData.light(),
-      darkTheme: ThemeData.dark(),
-      themeMode: _mode,
-      locale: _locale,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      // To access variables anywhere down the tree
-      home: InheritedStorage(
-        context: context,
-        map: {
-          "switchTheme": switchTheme,
-          "switchLocale": switchLocale,
+    // To access variables anywhere down the tree
+    return InheritedStorage(
+      context: context,
+      map: {
+        "switchTheme": switchTheme,
+        "switchLocale": switchLocale,
+      },
+      child: MaterialApp(
+        title: 'News app',
+        theme: ThemeData.light(),
+        darkTheme: ThemeData.dark(),
+        themeMode: _mode,
+        locale: _locale,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        initialRoute: '/home',
+        routes: {
+          '/home': (context) => const MainScreen(),
+          '/favorites': (context) => const FavoritesScreen(),
         },
-        child: const MainScreen(),
       ),
     );
   }

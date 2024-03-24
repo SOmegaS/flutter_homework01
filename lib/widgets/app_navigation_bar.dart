@@ -28,11 +28,12 @@ class AppNavigationBar extends StatelessWidget {
           case Screen.favorites:
             screen = const FavoritesScreen();
         }
-        Navigator.pushReplacement(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
             builder: (context) => screen,
           ),
+          ModalRoute.withName('/'),
         );
       },
       items: [

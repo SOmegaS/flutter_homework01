@@ -46,10 +46,8 @@ class FavoritesScreenState extends State<FavoritesScreen> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
         child: ListView.builder(
-          itemCount: GetIt.instance
-              .get<CallbackVariable<Favorites>>()
-              .value
-              .length(),
+          itemCount:
+              GetIt.instance.get<CallbackVariable<Favorites>>().value.length(),
           itemBuilder: (BuildContext context, int index) {
             // Card with click detector
             return GestureDetector(
